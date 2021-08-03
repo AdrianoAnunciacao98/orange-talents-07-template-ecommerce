@@ -1,18 +1,20 @@
 package br.com.zupacademy.adriano.mercadolivre.controllers;
 
 import br.com.zupacademy.adriano.mercadolivre.controllers.dto.UsuarioDto;
+import br.com.zupacademy.adriano.mercadolivre.controllers.validator.ProibeEmailDuplicadoValidator;
 import br.com.zupacademy.adriano.mercadolivre.entidades.Usuario;
 import br.com.zupacademy.adriano.mercadolivre.repository.UsuarioRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -24,6 +26,17 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     private final PasswordEncoder encoder;
+
+    @PersistenceContext
+    private EntityManager manager;
+    @Autowired
+    private ProibeEmailDuplicadoValidator proibeEmailDuplicado;
+
+    @InitBinder
+    public void init(WebDataBinder binder){
+    binder.addValidators(proibeEmailDuplicado);
+    }
+
 
     public UsuarioController(PasswordEncoder encoder) {
         this.encoder = encoder;

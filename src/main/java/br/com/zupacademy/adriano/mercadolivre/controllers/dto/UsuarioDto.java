@@ -3,18 +3,14 @@ package br.com.zupacademy.adriano.mercadolivre.controllers.dto;
 
 import br.com.zupacademy.adriano.mercadolivre.entidades.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.*;
-import java.time.Instant;
 import java.util.Date;
 
 public class UsuarioDto {
 
     @NotBlank
+    @Email
     private String login;
 
     @NotBlank(message = "minimo de 6 caracteres")

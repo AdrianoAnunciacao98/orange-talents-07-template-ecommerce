@@ -1,12 +1,9 @@
 package br.com.zupacademy.adriano.mercadolivre.entidades;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import javax.xml.crypto.Data;
-import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -16,8 +13,9 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Email
     @NotBlank
+    @Column(unique = true)
+    @Email
     private String login;
 
     @NotBlank(message = "minimo de 6 caracteres")
