@@ -1,6 +1,7 @@
 package br.com.zupacademy.adriano.mercadolivre.controllers.dto;
 
 
+import br.com.zupacademy.adriano.mercadolivre.entidades.SenhaLimpa;
 import br.com.zupacademy.adriano.mercadolivre.entidades.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -47,6 +48,6 @@ public class UsuarioDto {
     public UsuarioDto(){}
 
 public Usuario toModel(){
-    return new Usuario(this.login = login, this.senha = senha, this.data = data);
+    return new Usuario(this.login = login, new SenhaLimpa(this.senha), this.data = data);
 }
 }

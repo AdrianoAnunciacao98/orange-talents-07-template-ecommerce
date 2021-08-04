@@ -28,10 +28,10 @@ public class Usuario {
 
 
 
-    public Usuario(String login, String senha, Date data) {
+    public Usuario(String login, SenhaLimpa senhaLimpa, Date data) {
 
         this.login = login;
-        this.senha = senha;
+        this.senha = senhaLimpa.getSenhaComHash();
         this.data = data;
     }
 
