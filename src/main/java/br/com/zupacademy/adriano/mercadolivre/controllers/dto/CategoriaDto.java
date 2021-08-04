@@ -12,20 +12,12 @@ import javax.validation.constraints.Positive;
 public class CategoriaDto {
 
     @NotBlank
-    @UniqueValue(domainClass=Categoria.class, fieldName = "nome")
+    @UniqueValue(field = "nome", table = Categoria.class)
     private String nome;
 
     @Positive
-    @ExistsId(domainClass = Categoria.class, fieldName = "id")
+    @ExistsId(field = "id", table = Categoria.class, message = "Essa categoria não existe no sistema")
     private Long idCategoriamae;
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setIdCategoriamae(Long idCategoriamae) {
-        this.idCategoriamae = idCategoriamae;
-    }
 
 
     @Override
@@ -35,17 +27,22 @@ public class CategoriaDto {
                 ", idCategoriamae=" + idCategoriamae +
                 '}';
     }
+    @Deprecated
+    public CategoriaDto(){}
+
+
+    public CategoriaDto(String nome, Long idCategoriamae) {
+        this.nome = nome;
+        this.idCategoriamae = idCategoriamae;
+    }
 
     public Categoria toModel(EntityManager manager){
 
         Categoria categoria = new Categoria(nome);
-
-        if(idCategoriamae!=null){
-            Categoria categoriaMae = manager.find(Categoria.class, idCategoriamae);
-            Assert.notNull(categoriaMae, "O id da categoria mae precisa ser valido");
-            categoria.setMae(categoriaMae);
+        if(this.idCategoriamae == null){
+            return new Categoria(this.nome);
         }
-        return categoria;
+        return new Categoria(this.nome, this.idCategoriamae);
 
 
        // return new Categoria(this.nome = nome, this.idCategoriamae = idCategoriamae);

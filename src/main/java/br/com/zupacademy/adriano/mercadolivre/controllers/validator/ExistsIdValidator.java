@@ -11,26 +11,25 @@ import java.util.List;
 
 public class ExistsIdValidator implements ConstraintValidator<ExistsId, Long> {
 
-    private String domainAttribute;
-    private Class<?> klass;
+    private String field;
+    private Class<?> table;
 
     @PersistenceContext
     private EntityManager manager;
 
     @Override
-    public void initialize(ExistsId params) {
-       domainAttribute = params.fieldName();
-       klass = params.domainClass();
+    public void initialize(ExistsId constraintAnnotation) {
+        this.table = constraintAnnotation.table();
+        this.field = constraintAnnotation.field();
     }
 
     @Override
     public boolean isValid(Long value, ConstraintValidatorContext context) {
-        Query query = manager.createQuery("select 1 from " + klass.getName() + " where "+ domainAttribute + " = :value")
+        Query query = manager.createQuery("select 1 from " + table.getName() + " where "+ field + " = :value")
                 .setParameter("value", value);
 
         List<?> list = query.getResultList();
-        Assert.isTrue(list.size() <=1, "aconteceu algo bizarro e voce tem mais de um" + klass+
-                "com o atributo" + domainAttribute + "com o valor = " + value);
-        return !query.getResultList().isEmpty();
+
+        return !list.isEmpty();
     }
 }

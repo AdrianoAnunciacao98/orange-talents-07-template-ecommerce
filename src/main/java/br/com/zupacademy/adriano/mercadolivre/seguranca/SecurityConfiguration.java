@@ -53,10 +53,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //esse antmatchers serve para configurar endereços - permitindo todos os acessos
                 //permite os acessos dependendo da questão, como o id - de 0 a 9.
                 .antMatchers(HttpMethod.GET, "/produtos/{id: [0-9]+}").permitAll()
+                .antMatchers(HttpMethod.POST, "/produtos/{id: [0-9]+}").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/produtos/{id: [0-9]+}").permitAll()
+                .antMatchers("/**")
+                .permitAll()
                 .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
                 //quando a pessoa autenticar, quero retornar o token
                 //teria que fazer uma configuração adicional de token
-                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .cors()
