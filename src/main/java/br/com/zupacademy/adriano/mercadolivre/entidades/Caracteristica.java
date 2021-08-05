@@ -13,8 +13,8 @@ public class Caracteristica {
     @NotBlank
     private String descricao;
 
-    public Caracteristica() {
-    }
+    @Deprecated
+    public Caracteristica() {}
 
     public String getNome() {
         return nome;
