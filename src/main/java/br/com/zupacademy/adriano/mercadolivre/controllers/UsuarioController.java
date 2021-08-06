@@ -82,16 +82,16 @@ public class UsuarioController {
         //fazer consulta pelo login
         //primeiro consulta o usuario
 
-        Optional<UsuarioDto>  optUsuario = usuarioRepository.findByLogin(login);
+        Optional<Usuario>  optUsuario = usuarioRepository.findByLogin(login);
         if(optUsuario.isEmpty()){
             //se o usuario não for encontrado no login
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
         //pega o usuario do optional
-        UsuarioDto usuario = optUsuario.get();
+         optUsuario.get();
         //verificar se a senha está batendo
         //matches compara senha aberta com encriptada e o encoder faz isso.
-        boolean valid = encoder.matches(senha,usuario.getSenha());
+        boolean valid = encoder.matches(senha,optUsuario.get().getSenha());
         //se for válida, ok, caso contrario, unauthorized
         HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
         return ResponseEntity.status(status).body(valid);

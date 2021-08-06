@@ -12,7 +12,6 @@ import br.com.zupacademy.adriano.mercadolivre.repository.ProdutosRepository;
 import br.com.zupacademy.adriano.mercadolivre.repository.UsuarioRepository;
 import br.com.zupacademy.adriano.mercadolivre.seguranca.UsuarioLogado;
 import br.com.zupacademy.adriano.mercadolivre.utils.UploaderFake;
-import br.com.zupacademy.adriano.mercadolivre.utils.uploaderFake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
