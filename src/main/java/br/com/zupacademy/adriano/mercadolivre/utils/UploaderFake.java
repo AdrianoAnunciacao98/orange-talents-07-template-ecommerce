@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class UploaderFake implements Uploader{
 
     //links para imagens que passaram por upload.
+    @Override
     public Set<String> envia(List<MultipartFile> imagens) {
         return imagens.stream().map(imagem -> "http://bucket.io/" + imagem.getOriginalFilename()
         + "-" + UUID.randomUUID().toString()).collect(Collectors.toSet());
