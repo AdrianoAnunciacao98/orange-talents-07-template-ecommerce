@@ -6,6 +6,8 @@ import br.com.zupacademy.adriano.mercadolivre.entidades.Usuario;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class OpiniaoDto {
 
@@ -22,13 +24,22 @@ public class OpiniaoDto {
     @Deprecated
     public OpiniaoDto(){}
 
-    public OpiniaoDto(int nota, String titulo, String descricao) {
-        this.nota = nota;
-        this.titulo = titulo;
+    public OpiniaoDto(String descricao, String titulo, int nota) {
         this.descricao = descricao;
+        this.titulo = titulo;
+        this.nota = nota;
+    }
+
+    public static List<OpiniaoDto> doProduto(Produtos produto) {
+        return produto.getOpinioes()
+                .stream()
+                .map(item->new OpiniaoDto(item.getDescricao(), item.getTitulo(), item.getNota()))
+                .collect(Collectors.toList());
     }
 
     public Opiniao toModel(@NotNull @Valid Produtos produto, @NotNull @Valid Usuario consumidor) {
         return new Opiniao(nota,titulo,descricao,produto,consumidor);
     }
+
+
 }

@@ -1,5 +1,7 @@
 package br.com.zupacademy.adriano.mercadolivre.entidades;
 
+import org.springframework.boot.context.properties.DeprecatedConfigurationProperty;
+
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.List;
@@ -13,8 +15,6 @@ public class Caracteristica {
     @NotBlank
     private String descricao;
 
-    @Deprecated
-    public Caracteristica() {}
 
     public String getNome() {
         return nome;
@@ -53,4 +53,8 @@ public class Caracteristica {
         }
         return true;
     }
+@Deprecated
+public Caracteristica(){}
+
+
 }

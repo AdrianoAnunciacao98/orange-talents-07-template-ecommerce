@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PerguntaDto {
 
@@ -26,6 +28,15 @@ public class PerguntaDto {
     @Valid
     @ManyToOne
     private Produtos produto;
+
+
+    public PerguntaDto(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public static List<PerguntaDto> doProduto(Produtos produto) {
+        return produto.getPerguntas().stream().map(item->new PerguntaDto(item.getTitulo())).collect(Collectors.toList());
+    }
 
     @Override
     public String toString() {

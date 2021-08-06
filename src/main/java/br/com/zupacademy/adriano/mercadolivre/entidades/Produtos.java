@@ -1,5 +1,6 @@
 package br.com.zupacademy.adriano.mercadolivre.entidades;
 
+import br.com.zupacademy.adriano.mercadolivre.controllers.dto.PerguntaDto;
 import br.com.zupacademy.adriano.mercadolivre.controllers.validator.ExistsId;
 import com.fasterxml.classmate.Annotations;
 import org.hibernate.annotations.Type;
@@ -10,10 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -59,6 +57,12 @@ public class Produtos {
 
     @OneToMany(mappedBy = "produtos", cascade = CascadeType.MERGE)
     private Set<ImagemProduto> imagens = new HashSet<>();
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private List<Pergunta> perguntas;
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private List<Opiniao> opinioes;
 
 
     public Produtos(String nome, int quantidade, String descricao, BigDecimal valor, Long categoria, List<Caracteristica> caracteristicas, Usuario dono) {
@@ -120,8 +124,26 @@ public class Produtos {
 
     }
 
+    public Set<ImagemProduto> getImagens() {
+        return imagens;
+    }
+
     public boolean pertenceAoUsuario(Optional<Usuario> dono) {
         return this.dono.equals(dono);
     }
 
+
+
+    public List<Pergunta> getPerguntas() {
+        return perguntas;
+    }
+
+
+    public List<Caracteristica> getCaracteristica() {
+        return caracteristicas;
+    }
+
+    public List<Opiniao> getOpinioes() {
+        return opinioes;
+    }
 }

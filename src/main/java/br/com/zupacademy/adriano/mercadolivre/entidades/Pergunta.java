@@ -56,4 +56,7 @@ public class Pergunta {
         return produto.getDono();
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
 }

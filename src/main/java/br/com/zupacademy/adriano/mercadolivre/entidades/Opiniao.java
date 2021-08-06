@@ -47,4 +47,16 @@ public class Opiniao {
                 ", consumidor=" + consumidor +
                 '}';
     }
+
+    public int getNota() {
+        return nota;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
 }
