@@ -146,4 +146,14 @@ public class Produtos {
     public List<Opiniao> getOpinioes() {
         return opinioes;
     }
+
+    public boolean abataEstoque(@Positive int quantidade) {
+        if(quantidade<=this.quantidadeDisponivel){
+            this.quantidadeDisponivel-=quantidade;
+            return true;
+        }
+
+        return false;
+
+    }
 }
