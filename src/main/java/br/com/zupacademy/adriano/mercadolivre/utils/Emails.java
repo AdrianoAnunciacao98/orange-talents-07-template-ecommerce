@@ -1,5 +1,6 @@
 package br.com.zupacademy.adriano.mercadolivre.utils;
 
+import br.com.zupacademy.adriano.mercadolivre.entidades.Compra;
 import br.com.zupacademy.adriano.mercadolivre.entidades.Pergunta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,5 +23,12 @@ public class Emails {
         //corpo do email, titulo do email, nome da pessoa que vai receber o email, nome da pessoa interessada
         //email de destino
         mailer.send("<html>.. </html>", "Nova pergunta...", pergunta.getInteressada().getEmail(),"pergunta@mercadolivre.com", pergunta.getDonoProduto().getEmail());
+    }
+
+    public void novaCompra(Compra novaCompra) {
+        mailer.send("nova compra..." + novaCompra, "Você tem uma nova compra",
+                novaCompra.getComprador().getEmail(),
+                "compras@nossomercadolivre.com",
+                novaCompra.getComprador().getEmail());
     }
 }

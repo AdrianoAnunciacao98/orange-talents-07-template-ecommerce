@@ -6,6 +6,7 @@ import br.com.zupacademy.adriano.mercadolivre.entidades.Produtos;
 import br.com.zupacademy.adriano.mercadolivre.entidades.Usuario;
 import br.com.zupacademy.adriano.mercadolivre.repository.UsuarioRepository;
 import br.com.zupacademy.adriano.mercadolivre.seguranca.UsuarioLogado;
+import br.com.zupacademy.adriano.mercadolivre.utils.Emails;
 import br.com.zupacademy.adriano.mercadolivre.utils.GatewayPagamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Positive;
 import java.util.Optional;
 
@@ -30,9 +32,12 @@ public class FechaCompraController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private Emails emails;
+
     @PostMapping (value = "/compras")
     @Transactional
-    public ResponseEntity<?> comprar(@RequestBody @Valid CompraDto compraDto,
+    public String comprar(@RequestBody @Valid CompraDto compraDto,
                                      @AuthenticationPrincipal UsuarioLogado usuarioLogado, UriComponentsBuilder builder)
             throws BindException {
        Produtos produtocompra =  manager.find(Produtos.class, compraDto.getProduto());
@@ -48,16 +53,11 @@ public class FechaCompraController {
            manager.persist(novaCompra);
 
     //      String pagseguro = "paypal.com/" + novaCompra.getId()+ "?redirectUrl={urlRetornoAppPosPagamento}";
+           emails.novaCompra(novaCompra);
 
-           if(gatewayPagamento.equals(GatewayPagamento.PAGSEGURO)){
-               String urlPagSeguro = builder.path("/retorno-pagseguro/{id}").buildAndExpand(novaCompra.getId()).toString();
-               return ResponseEntity.status(302).body("pagseguro.com?returnId="+novaCompra.getId()+
-                       "&redirectUrl="+urlPagSeguro);
-           } else {
-               String urlPaypal = builder.path("/retorno-paypal/{id}").buildAndExpand(novaCompra.getId()).toString();
-               return ResponseEntity.status(302).body("paypal.com?returnId="+novaCompra.getId()+
-                       "&redirectUrl="+urlPaypal);
-           }
+           return novaCompra.urlRedirecionamento(builder);
+
+
 
        }
 

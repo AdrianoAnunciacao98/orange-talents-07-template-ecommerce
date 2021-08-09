@@ -38,7 +38,7 @@ public class Usuario {
 
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public String getLogin() {
@@ -66,4 +66,6 @@ public class Usuario {
     public String getEmail() {
         return this.login;
     }
+
+
 }
